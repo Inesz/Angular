@@ -1,0 +1,31 @@
+{
+  "name": "Angular2_memory",
+  "version": "1.0.0",
+  "description": "projekt z użyciem Angular2 i Typescript",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Inesz/Angular.git"
+  },
+  "keywords": [
+    "Angular2",
+    "Typescript",
+    "Memory"
+  ],
+  "author": "Inesz",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/Inesz/Angular/issues"
+  },
+  "dependencies": {
+    "express": "~4.13.4",
+    "express-generator": "~4.13.1",
+    "socket.io": "~1.4.6"
+  },
+  "devDependencies": {
+    "nodemon": "~1.9.2"
+  }
+}
