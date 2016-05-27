@@ -1,0 +1,19 @@
+<div>
+    <nav id="menu" class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li><a [routerLink]="['/']">Home</a></li>
+                <li><a [routerLink]="['/game']">Gra</a></li>
+                <li><a [routerLink]="['/picture']">Obrazki</a></li>
+            </ul>
+        </div>
+
+        <div id="hello" class="navbar-header">
+            <a class="navbar-brand">Witaj {}</a>
+        </div>
+    </nav>
+</div>
+
+<div>
+    <router-outlet></router-outlet>
+</div>
