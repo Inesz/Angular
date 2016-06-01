@@ -9,18 +9,18 @@ import { LocationStrategy,
 
 import { GameComponent }        from './game/game.component';
 import { PictureComponent }     from './picture/picture.component';
+import { LoginComponent }     from './login/login.component';
 
 @Component({
       selector: 'my-app',
       templateUrl: './app/menu.template.html',
-    //providers:  [DialogService, HeroService],
       directives: [ROUTER_DIRECTIVES]
     })
 
 @Routes([
       {path: '/game',  component: GameComponent},
       {path: '/picture',  component: PictureComponent},
-      {path: '*', component: AppComponent},
+      {path: '/', component: LoginComponent},
     ])
 
 export class AppComponent { }
