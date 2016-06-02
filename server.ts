@@ -23,24 +23,15 @@ function login(login: string) {
 enum checked {no, yes};
 let picturesList: Array<number>;
 
-interface Picture {
-    name: number;
-    correct: checked;
-}
-
 interface User {
     login: string;
     gameMode: number;
-    gameChecked: number;    //game score
-    gameTab: Picture[][];  
+    gameScore: Array<number>;    //game score
+    gameTab: Array<number>;
+    location1:number;          
 }
 
 let usersList: Array<User>;
-
-interface Location{
-    x:number;
-    y:number;
-}
 
 //---------------functions------------------
 
@@ -85,18 +76,17 @@ function logout(login:string):void{
     usersList.splice(i, 1);
 }
 
-function initGameTab(gameMode:number):Picture[][]{
-    let tempGameTab:Picture[][];
+function initGameTab(gameMode:number):number[]{
+    let tempGameTab: Array<number>;
     let tempPicturesList = picturesList.slice();
-    let tempLocationList: Array<Location>;
+    let tempLocationList: Array<number>;
     let picture: number;
-    let location: Location;
+    let location: number;
     let i: number,j: number,p: number,l: number;
+    
     //init tempLocationList
-    for (i = 0; i < gameMode; i++) {
-        for (j = 0; j < gameMode; j++) {
-            tempLocationList.push({x:i, y:j} as Location);
-        }
+    for (i = 0; i < gameMode*2; i++) {
+            tempLocationList.push(i);
     }  
 
     //init tempGameTab
@@ -119,28 +109,29 @@ function initGameTab(gameMode:number):Picture[][]{
             }
 
             //insert to tempGameTab
-            tempGameTab[location.x][location.y] = {name: picture, correct: checked.no} as Picture;
+            tempGameTab[location] = p;
         }
     }
     
     return tempGameTab;
 }
 
-function checkPicture(login:string, a:Location, b:Location):checked{
+//check picture and update score
+function checkPicture(login:string, l2:number):checked{
     let id:string = findUserId(login);
+    let l1:number = usersList[id].location1;
     
-    if(usersList[id].gameTab[a.x][a.y].name == usersList[id].gameTab[b.x][b.y].name){
-        usersList[id].gameTab[a.x][a.y].checked = checked.yes;
-        usersList[id].gameTab[b.x][b.y].checked = checked.yes;
+    if(usersList[id].gameTab[l1] == usersList[id].gameTab[l2]){
+        usersList[id].score.push(usersList[id].gameTab[l1]);
         return checked.yes;
     } else {
         return checked.no;
     }
 }
 
-function pictureToSend(login:string, l:Location):number{
+function pictureToSend(login:string, l:number):number{
     let user:User = findUserObject(login);
-    return user.gameTab[l.x][l.y].name;
+        return user.gameTab[l];
 }
 
 function updateGameTab(login:string):void{
@@ -153,20 +144,15 @@ function updateGameMode(login:string, gameMode:number):void{
     usersList[id].gameMode = gameMode;
 }
 
-function updateChecked(login:string):void{
-    let id:string = findUserId(login);
-    usersList[id].gameChecked++;
-};
-
 function checkIfWin(login:string):checked{
     let user:User = findUserObject(login);
-    return user.gameMode==user.gameChecked?checked.yes:checked.no;
+    return user.gameMode==user.gameScore.length?checked.yes:checked.no;
 };
 
 function resetGame(login:string):void{
     let id:string = findUserId(login);
     usersList[id].gameMode=null;
-    usersList[id].gameChecked=null;
+    usersList[id].gameScore=null;
     usersList[id].gameTab=null;
 };
 
