@@ -1,26 +1,28 @@
 import { Component }            from '@angular/core';
 import { bootstrap }            from '@angular/platform-browser-dynamic';
-import { ROUTER_PROVIDERS, Routes, ROUTER_DIRECTIVES} 
+import { Routes, Router, ROUTER_PROVIDERS, ROUTER_DIRECTIVES} 
                                 from '@angular/router';
 
 import { provide }              from '@angular/core';
 import { LocationStrategy,
          HashLocationStrategy } from '@angular/common';
 
-import { GameComponent }        from './game/game.component';
 import { PictureComponent }     from './picture/picture.component';
 import { LoginComponent }     from './login/login.component';
+import { ListComponent }     from './game/list.component';
+import { GameComponent }        from './game/game.component';
 
 @Component({
-      selector: 'my-app',
-      templateUrl: './app/menu.template.html',
-      directives: [ROUTER_DIRECTIVES]
-    })
+    selector: 'my-app',
+    templateUrl: './app/menu.template.html',
+    directives: [ROUTER_DIRECTIVES]
+})
 
 @Routes([
-      {path: '/game',  component: GameComponent},
-      {path: '/picture',  component: PictureComponent},
-      {path: '/', component: LoginComponent},
+    {path: '/game', component: ListComponent},
+    {path: '/games/:id', component: GameComponent},
+    {path: '/picture', component: PictureComponent},
+    {path: '/', component: LoginComponent},
     ])
 
 export class AppComponent { }

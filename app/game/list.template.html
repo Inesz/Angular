@@ -1,0 +1,8 @@
+<h2>list</h2>
+
+<ul>
+  <li *ngFor="let size of sizes"
+    (click)="onSelect(size)">
+    <span>{{size}}</span>
+  </li>
+</ul>
