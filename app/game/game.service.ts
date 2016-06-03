@@ -14,8 +14,7 @@ getGame (): Observable<number[]> {
     }
     
     getModes (): Observable<GameMode[]> {
-        console.log("getModels");
-            return this.http.get('/game').map(this.extractData).catch(this.handleError);
+            return this.http.get('/games').map(this.extractData).catch(this.handleError);
     }
     
     private extractData(res: Response) {

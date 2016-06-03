@@ -23,7 +23,7 @@ export class ListComponent implements OnInit {
 }
     
     onSelect(size:number){
-        this.router.navigate(['/games', size]);
+        this.router.navigate(['/game', size]);
     }
 
 }

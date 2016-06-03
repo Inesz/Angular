@@ -24,8 +24,8 @@ import { HTTP_PROVIDERS }    from '@angular/http';
 })
 
 @Routes([
-    {path: '/game', component: ListComponent},
-    {path: '/games/:id', component: GameComponent},
+    {path: '/games', component: ListComponent},
+    {path: '/game/:id', component: GameComponent},
     {path: '/picture', component: PictureComponent},
     {path: '/', component: LoginComponent},
     ])

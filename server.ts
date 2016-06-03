@@ -157,7 +157,7 @@ app.get('/game/:id', (req, res) => {
     console.log('getting user ' + req.params.id);
 });
 
-app.get('/game', (req, res) => {
+app.get('/games', (req, res) => {
     console.log(gameModes);
      console.log(JSON.stringify(gameModes));
     res.send(JSON.stringify(gameModes));
