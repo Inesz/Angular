@@ -6,7 +6,8 @@
 
 <div ng-controller="loginCtl">
      <form action="">
-        <input type="text" autofocus autocomplete="on" alt="login" ng-model="loginModel">
-        <input type="submit" value="Graj" ng-model="btnloginModel">
+        <input type="text" autofocus autocomplete="on" alt="login"[(ngModel)]="login">
+        <input type="submit" value="Graj" (click)="checkLogin()">
+         <p>{{msgNotFree}}</p>
     </form> 
 </div>

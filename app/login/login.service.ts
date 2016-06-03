@@ -1,0 +1,34 @@
+import { Injectable }     from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Headers, RequestOptions } from '@angular/http';
+import { Observable }     from 'rxjs/Observable';
+
+@Injectable()
+export class LoginService {
+    
+constructor (private http: Http) {}
+        
+        
+checkLogin (login : string): Observable<number> {
+       
+
+    let headers = new Headers({'Content-Type':'application/json'});
+     let options = new RequestOptions({ headers : headers });
+    let content = JSON.stringify({login});
+     console.log(content);
+        return this.http.post('/login', content, options).map(this.extractData).catch(this.handleError);
+    }
+    
+    private extractData(res: Response) {
+        let body = res.json();
+    console.log(body.checked);
+        return +body.checked;
+    }
+    
+    private handleError (error: any) {
+         console.log("handleError");
+    let errMsg = (error.message) ? error.message : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+    console.error(errMsg); // log to console instead
+    return Observable.throw(errMsg);
+    }
+}

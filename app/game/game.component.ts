@@ -12,14 +12,14 @@ export class GameComponent implements OnInit {
       console.log("game"); 
     }
     
-errorMessage: string;
+    errorMessage: string;
     
   ngOnInit() {
       this.getGame();
   }
     
-getGame(){
-     this.gameService.getGame().subscribe();
-}
+    getGame(){
+        this.gameService.getGame().subscribe();
+    }
     
 }
