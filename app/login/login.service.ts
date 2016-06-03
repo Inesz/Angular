@@ -11,17 +11,15 @@ constructor (private http: Http) {}
         
 checkLogin (login : string): Observable<number> {
        
-
     let headers = new Headers({'Content-Type':'application/json'});
      let options = new RequestOptions({ headers : headers });
     let content = JSON.stringify({login});
-     console.log(content);
+    
         return this.http.post('/login', content, options).map(this.extractData).catch(this.handleError);
     }
     
     private extractData(res: Response) {
         let body = res.json();
-    console.log(body.checked);
         return +body.checked;
     }
     

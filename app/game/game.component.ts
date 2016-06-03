@@ -15,11 +15,22 @@ export class GameComponent implements OnInit {
     errorMessage: string;
     
   ngOnInit() {
-      this.getGame();
+      //this.getGame();
+      this.getPicture();
   }
     
     getGame(){
-        this.gameService.getGame().subscribe();
+        this.gameService.getGame("4").subscribe();
     }
     
+      getPicture(){
+        this.gameService.getPicture("2").subscribe(
+data => {console.log(data);
+//this.posts = data.data.children;}
+console.log("uzupelnij picture");
+        //angular.element(this.$document.querySelector('#photo'));
+    document.querySelector( "#photo" ).src = data.img;
+ 
+          });
+      }
 }

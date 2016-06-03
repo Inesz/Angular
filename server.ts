@@ -155,10 +155,11 @@ function resetGame(login:string):void{
 };
 
 //-------------communication function------------------
-
+/*
 app.get('/game/:id', (req, res) => {
     console.log('getting user ' + req.params.id);
 });
+*/
 
 app.get('/games', (req, res) => {
     console.log(gameModes);
@@ -174,5 +175,15 @@ app.post('/login', (req, res) => {
     }else{
         res.sendStatus(JSON.stringify({'checked': 1}));
     }
+});
+
+app.post('/game/:id', (req, res) => {
+    console.log(req.body.id);
+
+    let pathToFile = "./images/2.png";
+    console.log(pathToFile);
+    
+    res.attachment(pathToFile);
+    res.sendStatus(JSON.stringify({'img' : pathToFile}));
 });
 

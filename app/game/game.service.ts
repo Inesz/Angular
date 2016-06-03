@@ -1,5 +1,6 @@
 import { Injectable }     from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { Headers, RequestOptions } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 import { GameMode } from './game.mode';
 
@@ -8,13 +9,21 @@ export class GameService {
     
     constructor (private http: Http) {}
     
-getGame (): Observable<number[]> {
+    getGame (): Observable<number[]> {
         console.log("gameService");
             return this.http.get('/game/10').map(this.extractData).catch(this.handleError);
     }
     
     getModes (): Observable<GameMode[]> {
             return this.http.get('/games').map(this.extractData).catch(this.handleError);
+    }
+    
+    getPicture(id : string): Observable<any>{
+        let headers = new Headers({'Content-Type':'application/json'});
+        let options = new RequestOptions({ headers : headers });
+        let content = JSON.stringify({id});
+        
+        return this.http.post('/game/4', content, options).map(this.extractData).catch(this.handleError);
     }
     
     private extractData(res: Response) {
