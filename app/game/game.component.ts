@@ -1,23 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
-//import { bootstrap }        from '@angular/platform-browser-dynamic';
+import { GameService }       from './game.service';
 
 @Component({
-  templateUrl: './app/game/game.template.html'
+    templateUrl: './app/game/game.template.html',
+    providers: [ GameService ]
 })
 
 export class GameComponent implements OnInit { 
 
-constructor(private router: Router) {
+    constructor(private gameService: GameService) {
       console.log("game"); 
     }
     
+errorMessage: string;
+    
   ngOnInit() {
-    //let id = +this.routeParams.get('id');
-    //this.heroService.getHero(id)
-      //.then(hero => this.hero = hero);
+      this.getGame();
   }
     
+getGame(){
+     this.gameService.getGame().subscribe();
 }
-
+    
+}

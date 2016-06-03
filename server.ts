@@ -11,14 +11,9 @@ app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
 
-/*
-function login(login: string) {
-    
-    return "Hello, " + person;
-}
-*/
-
 //---------------variables-----------------
+interface gameMode{ mode:number; }
+let gameModes : gameMode[] = [{mode: 2}, {mode: 4}, {mode: 6}, {mode: 8}];
 
 enum checked {no, yes};
 let picturesList: Array<number>;
@@ -156,6 +151,14 @@ function resetGame(login:string):void{
     usersList[id].gameTab=null;
 };
 
-
-
 //-------------communication function------------------
+
+app.get('/game/:id', (req, res) => {
+    console.log('getting user ' + req.params.id);
+});
+
+app.get('/game', (req, res) => {
+    console.log(gameModes);
+     console.log(JSON.stringify(gameModes));
+    res.send(JSON.stringify(gameModes));
+});

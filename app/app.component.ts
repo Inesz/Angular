@@ -1,6 +1,9 @@
 import { Component }            from '@angular/core';
 import { bootstrap }            from '@angular/platform-browser-dynamic';
-import { Routes, Router, ROUTER_PROVIDERS, ROUTER_DIRECTIVES} 
+import { Routes, 
+        Router, 
+        ROUTER_PROVIDERS,
+        ROUTER_DIRECTIVES} 
                                 from '@angular/router';
 
 import { provide }              from '@angular/core';
@@ -11,11 +14,13 @@ import { PictureComponent }     from './picture/picture.component';
 import { LoginComponent }     from './login/login.component';
 import { ListComponent }     from './game/list.component';
 import { GameComponent }        from './game/game.component';
+import './rxjs-operators';
+import { HTTP_PROVIDERS }    from '@angular/http';
 
 @Component({
     selector: 'my-app',
     templateUrl: './app/menu.template.html',
-    directives: [ROUTER_DIRECTIVES]
+    directives: [ ROUTER_DIRECTIVES ]
 })
 
 @Routes([
@@ -27,7 +32,9 @@ import { GameComponent }        from './game/game.component';
 
 export class AppComponent { }
 
+
 bootstrap(AppComponent, [
-      ROUTER_PROVIDERS,
-      provide(LocationStrategy, {useClass: HashLocationStrategy})
+    HTTP_PROVIDERS,
+    ROUTER_PROVIDERS,
+    provide(LocationStrategy, {useClass: HashLocationStrategy})
 ]);
