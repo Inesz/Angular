@@ -32,7 +32,7 @@ providers : [MainService]
     {path: '/', component: LoginComponent},
     ])
 
-export class AppComponent { }
+export class AppComponent implements OnInit { }
 
 bootstrap(AppComponent, [
     HTTP_PROVIDERS,

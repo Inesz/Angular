@@ -1,5 +1,8 @@
 <h2>game</h2>
 
-<img id="photo"><img/>
-
-<h2>{{login}}  {{mode}}</h2>
+<div id="gameBoard">
+<div *ngFor="let m of mode"
+    (click)="getPicture(m)">
+    <img name="photo" src=""><img/>
+</div>
+</div>

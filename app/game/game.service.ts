@@ -18,12 +18,20 @@ export class GameService {
             return this.http.get('/games').map(this.extractData).catch(this.handleError);
     }
     
-    getPicture(id : string): Observable<any>{
+    getPicture(login : string, mode : string, id : string): Observable<any>{
         let headers = new Headers({'Content-Type':'application/json'});
         let options = new RequestOptions({ headers : headers });
-        let content = JSON.stringify({id});
+        let content = JSON.stringify({login, id});
         
-        return this.http.post('/game/4', content, options).map(this.extractData).catch(this.handleError);
+        return this.http.post('/game/'+mode, content, options).map(this.extractData).catch(this.handleError);
+    }
+    
+    initGame(login : string, mode : string) : Observable<any>{
+        let headers = new Headers({'Content-Type':'application/json'});
+        let options = new RequestOptions({ headers : headers });
+        let content = JSON.stringify({login, mode});
+        
+        return this.http.post('/game/'+mode, content, options).map(this.extractData).catch(this.handleError);
     }
     
     private extractData(res: Response) {

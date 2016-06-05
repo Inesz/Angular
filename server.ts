@@ -11,7 +11,8 @@ app.get('/', function(req, res){
 });
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+    console.log('Example app listening on port 3000!');
+    initPicturesList();
 });
 
 //---------------variables-----------------
@@ -19,7 +20,7 @@ interface gameMode{ mode:number; }
 let gameModes : gameMode[] = [{mode: 2}, {mode: 4}, {mode: 6}, {mode: 8}];
 
 enum checked {no, yes};
-let picturesList: Array<number> = [];
+let picturesList: number[] = [];
 
 interface User {
     login: string;
@@ -74,10 +75,15 @@ function logout(login:string):void{
     usersList.splice(i, 1);
 }
 
+function initGameScore(login:string):void{
+    let id:string = findUserId(login);
+    usersList[id].gameScore = [];
+}
+
 function initGameTab(gameMode:number):number[]{
-    let tempGameTab: Array<number>;
-    let tempPicturesList = picturesList.slice();
-    let tempLocationList: Array<number>;
+    let tempGameTab: number[] = [];
+    let tempPicturesList : number[] = picturesList.slice();
+    let tempLocationList: number[] = [];
     let picture: number;
     let location: number;
     let i: number,j: number,p: number,l: number;
@@ -96,7 +102,7 @@ function initGameTab(gameMode:number):number[]{
             picture = tempPicturesList[p];
             tempPicturesList.splice(p, 1);
         }
-
+    
         //rand location
         for(j=0; j < 2; j++){
             let l:number = Math.floor(Math.random() * tempLocationList.length); 
@@ -107,7 +113,7 @@ function initGameTab(gameMode:number):number[]{
             }
 
             //insert to tempGameTab
-            tempGameTab[location] = p;
+            tempGameTab[location] = picture;
         }
     }
     
@@ -120,7 +126,7 @@ function checkPicture(login:string, l2:number):checked{
     let l1:number = usersList[id].location1;
     
     if(usersList[id].gameTab[l1] == usersList[id].gameTab[l2]){
-        usersList[id].score.push(usersList[id].gameTab[l1]);
+        usersList[id].gameScore.push(usersList[id].gameTab[l1]);
         return checked.yes;
     } else {
         return checked.no;
@@ -147,6 +153,31 @@ function checkIfWin(login:string):checked{
     return user.gameMode==user.gameScore.length?checked.yes:checked.no;
 };
 
+
+function comparePictures(login : string, picture : number) : {} {
+    let id : string = findUserId(login);
+    let img = "./images/"+pictureToSend(login, picture)+".png";
+    let resp : {} = {};
+
+    //pierwszy z pary
+    if(usersList[id].location1 === undefined){
+        usersList[id].location1 = picture;
+        resp = {img};
+    }else{
+        //drugi z pary
+        if(checkPicture(login, picture) === checked.yes){
+            if(checkIfWin(login) === checked.yes)
+                resp = {img, score : "win"};
+            else    
+                resp = {img, score : "hit"};
+        }else{
+            resp = {img, score : "fail"};
+        }
+        usersList[id].location1 = undefined;
+    }
+    return resp;
+}
+
 function resetGame(login:string):void{
     let id:string = findUserId(login);
     usersList[id].gameMode=null;
@@ -155,11 +186,6 @@ function resetGame(login:string):void{
 };
 
 //-------------communication function------------------
-/*
-app.get('/game/:id', (req, res) => {
-    console.log('getting user ' + req.params.id);
-});
-*/
 
 app.get('/games', (req, res) => {
     console.log(gameModes);
@@ -178,12 +204,17 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/game/:id', (req, res) => {
-    console.log(req.body.id);
-
-    let pathToFile = "./images/2.png";
-    console.log(pathToFile);
     
-    res.attachment(pathToFile);
-    res.sendStatus(JSON.stringify({'img' : pathToFile}));
+    if(req.body.mode !== undefined){
+        updateGameMode(req.body.login, req.body.mode);
+        updateGameTab(req.body.login);
+        initGameScore(req.body.login);
+        
+        let pathToFile = "./images/"+0+".png";
+        res.attachment(pathToFile);
+        res.sendStatus(JSON.stringify({'img' : pathToFile}));
+    
+    }else{  
+        res.sendStatus(JSON.stringify(comparePictures(req.body.login, req.body.id)));
+    }
 });
-
