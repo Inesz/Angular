@@ -1,4 +1,4 @@
-import { Component }            from '@angular/core';
+import { Component, OnInit }    from '@angular/core';
 import { bootstrap }            from '@angular/platform-browser-dynamic';
 import { Routes, 
         Router, 
@@ -16,11 +16,13 @@ import { ListComponent }     from './game/list.component';
 import { GameComponent }        from './game/game.component';
 import './rxjs-operators';
 import { HTTP_PROVIDERS }    from '@angular/http';
+import { MainService } from './main.service'
 
 @Component({
     selector: 'my-app',
     templateUrl: './app/menu.template.html',
-    directives: [ ROUTER_DIRECTIVES ]
+    directives: [ ROUTER_DIRECTIVES ],
+providers : [MainService]
 })
 
 @Routes([
@@ -32,9 +34,10 @@ import { HTTP_PROVIDERS }    from '@angular/http';
 
 export class AppComponent { }
 
-
 bootstrap(AppComponent, [
     HTTP_PROVIDERS,
     ROUTER_PROVIDERS,
     provide(LocationStrategy, {useClass: HashLocationStrategy})
+    
 ]);
+
