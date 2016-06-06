@@ -21,6 +21,7 @@ export class GameComponent implements OnInit {
     public firstPicture : number;
     errorMessage: string;
     private preventDefault : number[] = [];
+    private wait : number = 0;
     
     ngOnInit() {
         this.initModeList();
@@ -50,7 +51,9 @@ export class GameComponent implements OnInit {
         //unbind if mach
         if(this.preventDefault.indexOf(id)!==-1) return;
         //if clicked the same object
-        if(this.firstPicture===id) return;
+        if(this.firstPicture===id && this.moves%2 === 1) return;
+        //pause before the next move
+        if(this.wait === 1) return;
             
         this.gameService.getPicture(this.login, this.mainService.getMode(), id).subscribe( 
             data => {
@@ -69,8 +72,12 @@ export class GameComponent implements OnInit {
                             alert("Brawo ! Odnalazłeś wszystkie pary w "+ this.moves/2 + " ruchach :)");
                     }
                     if (data.score === "fail"){
+                        this.wait = 1;
+                        setTimeout(() => {
+                        this.wait = 0;
                         $("#"+id+" img:nth-child(1)").attr("src", this.defPicture);
                         $("#"+this.firstPicture+" img:nth-child(1)").attr("src", this.defPicture);
+                        },3000);
                     }
                 }else{
                     this.firstPicture = id;
