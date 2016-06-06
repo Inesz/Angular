@@ -16,7 +16,11 @@ export class GameComponent implements OnInit {
     
     public login : string = this.mainService.getLogin();
     public mode : number[] = [];
+    public moves : number = 0;
+    public defPicture : string = "";
+    public firstPicture : number;
     errorMessage: string;
+    private preventDefault : number[] = [];
     
     ngOnInit() {
         this.initModeList();
@@ -36,16 +40,41 @@ export class GameComponent implements OnInit {
     initGame(login : string, mode : number){
         this.gameService.initGame(login, mode).subscribe( 
             data => {
-                $("img").attr("src", data.img);
+                this.defPicture = data.img;
+                $("img:nth-child(1)").attr("src", data.img);
             });
     }
     
+    
     getPicture(id : number){
-        this.gameService.getPicture(this.login, this.mode, id).subscribe( 
+        //unbind if mach
+        if(this.preventDefault.indexOf(id)!==-1) return;
+        //if clicked the same object
+        if(this.firstPicture===id) return;
+            
+        this.gameService.getPicture(this.login, this.mainService.getMode(), id).subscribe( 
             data => {
-                //wyświetlanie do poprawy
-                $("div:nth-child("+(id+1)+") img:nth-child(1)").attr("src", data.img);
                 console.log(data);
+                ++this.moves;
+                
+                $("#"+id+" img:nth-child(1)").attr("src", data.img);
+                
+                if(this.moves%2 === 0){
+                    console.log("druga karta");
+                    if ( data.score === "win" || data.score === "hit" ){
+                        this.preventDefault.push(id);
+                        this.preventDefault.push(this.firstPicture);
+                        
+                        if( data.score === "win" )
+                            alert("Brawo ! Odnalazłeś wszystkie pary w "+ this.moves/2 + " ruchach :)");
+                    }
+                    if (data.score === "fail"){
+                        $("#"+id+" img:nth-child(1)").attr("src", this.defPicture);
+                        $("#"+this.firstPicture+" img:nth-child(1)").attr("src", this.defPicture);
+                    }
+                }else{
+                    this.firstPicture = id;
+                }
             });
     }
     

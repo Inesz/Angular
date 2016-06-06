@@ -1,8 +1,7 @@
 <h2>game</h2>
 
 <div id="gameBoard">
-<div *ngFor="let m of mode"
-    (click)="getPicture(m)">
+<div *ngFor="let m of mode" (click)="getPicture(m)" id="{{m}}">
     <img name="photo" src=""><img/>
 </div>
 </div>
