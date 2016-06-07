@@ -1,7 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
     templateUrl: './app/picture/picture.template.html'
 })
 
-export class PictureComponent{ }
+export class PictureComponent implements OnInit{ 
+
+    getImage(){}
+    
+}
