@@ -35,7 +35,7 @@ let usersList: Array<User> = [];
 //---------------functions------------------
 
 function initPicturesList():void{
-    picturesList = [1,2,3,4,5];
+    picturesList = [1,2,3,4,5,6,7,8];
 }
 
 function addToPicturesList(picture:number):void{
