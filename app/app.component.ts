@@ -38,6 +38,5 @@ bootstrap(AppComponent, [
     HTTP_PROVIDERS,
     ROUTER_PROVIDERS,
     provide(LocationStrategy, {useClass: HashLocationStrategy})
-    
 ]);
 

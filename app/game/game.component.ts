@@ -77,7 +77,7 @@ export class GameComponent implements OnInit {
                         this.wait = 0;
                         $("#"+id+" img:nth-child(1)").attr("src", this.defPicture);
                         $("#"+this.firstPicture+" img:nth-child(1)").attr("src", this.defPicture);
-                        },3000);
+                        },1000);
                     }
                 }else{
                     this.firstPicture = id;
