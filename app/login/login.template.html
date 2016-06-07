@@ -4,10 +4,17 @@
 </div>
 
 
-<div ng-controller="loginCtl">
-     <form action="">
-        <input type="text" autofocus autocomplete="on" alt="login"[(ngModel)]="login">
-        <input type="submit" value="Graj" (click)="checkLogin()">
-         <p>{{msgNotFree}}</p>
+<div>
+     <form (ngSubmit)="checkLogin()" #frm="ngForm">
+        <input type="text" autofocus autocomplete="on" alt="login" required [(ngModel)]="login" #lgn="ngForm">
+        <button type="submit" class="btn btn-default" [disabled]="!frm.form.valid" >Zaloguj</button>
+        <div [hidden]="lgn.valid || lgn.pristine" class="alert alert-danger">
+            Login jest wymagany !
+        </div>
+         
+         <div [hidden]="ifLoginFree" class="alert alert-danger">
+            Login jest zajęty !
+        </div>
     </form> 
 </div>
+
